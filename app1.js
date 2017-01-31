@@ -1,10 +1,9 @@
 //var TESTCODE = 0x41C7C03F; //0x41A2;
 var TESTCODE = 0x41A2;
-var WAIT_TIME = 13; // wait time in microsecs; compensated for the LED operating time
+var WAIT_TIME = 9; // wait time in microsecs; compensated for the LED operating time
 var BIT_TIME = 562; // length of carrier bit in microseconds
-var TOGGLE_BIT_MASK = 0x3FF;
-var TOGGLE_MASK = 0x3FF;
-var BIT_SIZE = 15;
+var TOGGLE_BIT_MASK = 0xFFFF; //0x800000000; //3FF;
+var BIT_SIZE = 16;
 
 var five = require("johnny-five");
 var Raspi = require("raspi-io");
@@ -70,15 +69,14 @@ function sendCode(led, code){
 			// bit LOW
 			delayMicroSeconds(BIT_TIME);
 		}
-		code<<=1;
-		
+		code<<=1;		
 	}
 	// stop bit
 	carrier(led, BIT_TIME);
 };
 
 function delayMicroSeconds(v){
-	var mms = v * 0.000001;
+	var mms = v * 0.00001;
 	var start = new Date().getTime();
 	var end = start;
 	while(end < start + mms) {
